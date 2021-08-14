@@ -1,8 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { AdsService } from './ads.service';
 import { AdDTO } from './dto/ad.dto';
 
+@ApiTags('ads')
 @UseGuards(JwtAuthGuard)
 @Controller('api/ads')
 export class AdsController {
