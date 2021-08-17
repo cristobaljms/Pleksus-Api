@@ -6,12 +6,21 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AdsModule } from './ads/ads.module';
+import { SendGridModule } from "@anchan828/nest-sendgrid";
+import { TwilioModule } from 'nestjs-twilio';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env.development'],
+      envFilePath: ['.env'],
       isGlobal: true,
+    }),
+    TwilioModule.forRoot({
+      accountSid: process.env.TWILIO_ACCOUNT_SID,
+      authToken: process.env.TWILIO_AUTH_TOKEN,
+    }),
+    SendGridModule.forRoot({
+      apikey: process.env.SENDGRID_API_KEY,
     }),
     MongooseModule.forRoot(process.env.URI_MONGODB, {
       useCreateIndex: true,

@@ -14,7 +14,11 @@ export class UsersService {
     return await bcrypt.compare(password, passwordDB);
   }
 
-  async findByUsername(username: string) {
+  async getById(id: string): Promise<IUser>{
+    return await this.model.findById(id);
+  }
+
+  async findByUsername(username: string): Promise<IUser>{
     return await this.model.findOne({ username });
   }
 
@@ -25,7 +29,7 @@ export class UsersService {
 
   async create(userDTO: UserDTO): Promise<IUser> {
     const hash = await this.hashPassword(userDTO.password);
-    const newUser = new this.model({ ...userDTO, password: hash });
+    const newUser = new this.model({ ...userDTO, password: hash, admin: false, isEmailConfirmed: false, phone: null});
     return await newUser.save();
   }
 
@@ -46,5 +50,17 @@ export class UsersService {
     const hash = await this.hashPassword(userDTO.password);
     const newUser = new this.model({ ...userDTO, password: hash });
     return await this.model.findByIdAndUpdate(id, newUser, { new: true });
+  }
+
+  async afiliate(id: string, userDTO: UserDTO): Promise<IUser> {
+    const hash = await this.hashPassword(userDTO.password);
+    const newUser = new this.model({ ...userDTO, password: hash });
+    return await this.model.findByIdAndUpdate(id, newUser, { new: true });
+  }
+
+  async markEmailAsConfirmed(username: string) {
+    return this.model.findOneAndUpdate({ username }, {
+      isEmailConfirmed: true
+    });
   }
 }
