@@ -5,16 +5,22 @@ export class UserUpdateDTO {
   @ApiProperty()
   @IsOptional()
   @IsString()
-  readonly name?: string;
+  readonly name: string;
 
   @ApiProperty()
   @IsOptional()
   @IsString()
-  readonly phone?: string = null;
+  readonly phone: string = null;
 
   @ApiProperty()
   @IsOptional()
   @IsNotEmpty()
   @IsString()
   readonly password: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  readonly photo: string;
 }

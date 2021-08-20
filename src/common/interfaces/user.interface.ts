@@ -5,4 +5,5 @@ export interface IUser extends Document {
   admin: boolean;
   isEmailConfirmed: boolean;
   phone: string;
+  photo: string;
 }

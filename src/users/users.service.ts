@@ -1,4 +1,10 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpStatus,
+  Injectable,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { UserDTO } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
 import { InjectModel } from '@nestjs/mongoose';
@@ -6,6 +12,7 @@ import { Model } from 'mongoose';
 import { USER } from 'src/common/models/models';
 import { IUser } from 'src/common/interfaces/user.interface';
 import { UserUpdateDTO } from './dto/userUpdate.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Injectable()
 export class UsersService {
@@ -69,6 +76,14 @@ export class UsersService {
       currentUser.password = hash;
     }
 
+    return await currentUser.save();
+  }
+
+  async updatePhotoProfile(id: string, file: Express.Multer.File): Promise<IUser> {
+    const fileB64 = file.buffer.toString('base64');
+    console.log('fileB64', fileB64);
+    const currentUser = await this.model.findById(id);
+    currentUser.photo = fileB64;
     return await currentUser.save();
   }
 

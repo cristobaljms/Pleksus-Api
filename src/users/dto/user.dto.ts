@@ -24,4 +24,6 @@ export class UserDTO {
   readonly isEmailConfirmed: boolean = false;
   
   readonly phone: string = null;
+  
+  readonly photo: string = null;
 }
