@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserDTO } from 'src/users/dto/user.dto';
-import { userOnlyIdDTO } from 'src/users/dto/userOnlyId.dto';
+import { UserOnlyIdDTO } from 'src/users/dto/userOnlyId.dto';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
@@ -43,7 +43,7 @@ export class AuthController {
 
   @Post('resend-confirmation-link')
   @UseGuards(JwtAuthGuard)
-  async resendConfirmationLink(@Body() request: userOnlyIdDTO) {
+  async resendConfirmationLink(@Body() request: UserOnlyIdDTO) {
     await this.authService.resendConfirmationLink(request.id);
   }
 }

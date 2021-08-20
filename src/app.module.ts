@@ -5,9 +5,10 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AdsModule } from './ads/ads.module';
 import { SendGridModule } from "@anchan828/nest-sendgrid";
 import { TwilioModule } from 'nestjs-twilio';
+import { PropertiesModule } from './properties/properties.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { TwilioModule } from 'nestjs-twilio';
     }),
     UsersModule,
     AuthModule,
-    AdsModule,
+    PropertiesModule,
+    OrdersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
