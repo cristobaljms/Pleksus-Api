@@ -54,7 +54,7 @@ export class UsersService {
   }
 
   async update(id: string, userUpdateDTO: UserUpdateDTO): Promise<IUser> {
-    const currentUser: IUser = await this.model.findById(id);
+    const currentUser = await this.model.findById(id);
 
     if (userUpdateDTO.name) {
       currentUser.name = userUpdateDTO.name;
@@ -64,14 +64,12 @@ export class UsersService {
       currentUser.phone = userUpdateDTO.phone;
     }
 
-    const newUser = new this.model({ ...currentUser });
-    return await this.model.findByIdAndUpdate(id, newUser, { new: true });
-  }
+    if (userUpdateDTO.password) {
+      const hash = await this.hashPassword(userUpdateDTO.password);
+      currentUser.password = hash;
+    }
 
-  async afiliate(id: string, userDTO: UserDTO): Promise<IUser> {
-    const hash = await this.hashPassword(userDTO.password);
-    const newUser = new this.model({ ...userDTO, password: hash });
-    return await this.model.findByIdAndUpdate(id, newUser, { new: true });
+    return await currentUser.save();
   }
 
   async markEmailAsConfirmed(username: string) {

@@ -11,4 +11,10 @@ export class UserUpdateDTO {
   @IsOptional()
   @IsString()
   readonly phone?: string = null;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  readonly password: string;
 }
