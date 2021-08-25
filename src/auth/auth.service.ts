@@ -21,14 +21,12 @@ export class AuthService {
 
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.usersService.findByUsername(username);
-    const isValidPassword = await this.usersService.checkPassword(
-      password,
-      user.password,
-    );
+    if (!user) return null;
 
-    if (user && isValidPassword) return user;
+    const isValidPassword = await this.usersService.checkPassword(password, user.password);
+    if (!isValidPassword) return null;
 
-    return null;
+    return user;
   }
 
   async login(user: any) {
@@ -65,16 +63,18 @@ export class AuthService {
     });
 
     const url = `${process.env.EMAIL_CONFIRMATION_URL}?token=${token}`;
-
-    const text = `Welcome to the application. To confirm the email address, click here: ${url}`;
-
+    const html = `
+      <h3 style="font-size: 22px; font-family: Arial;">Bienvenido a Pleksus</h3>
+      <p style="font-size: 20px; font-family: Arial;">Felicidades por registrarse en Pleksus, para culminar con su registro lo invitamos a seguir el siguiente link: <a target="_blank" href="${url}">Link de verificación</a></p>
+    `
+    
     try {
       return this.sendGrid.send({
         to: email,
         from: 'cmunoz21x@gmail.com',
-        subject: 'Email confirmation',
-        text: text
-      });
+        subject: 'Pleksus - Correo de confirmación',
+        html
+      })
     } catch (e) {
       return e;
     }
@@ -82,20 +82,17 @@ export class AuthService {
 
   async resendConfirmationLink(userId: string) {
     const user = await this.usersService.getById(userId);
-    if (user.isEmailConfirmed) {
-      throw new BadRequestException('Email already confirmed');
-    }
-    await this.sendVerificationLink(user.username);
+    if (!user) throw new BadRequestException('User dont exist');
+    if (user.isEmailConfirmed) throw new BadRequestException('Email already confirmed');
+    return await this.sendVerificationLink(user.username);
   }
 
 
 
   public async confirmEmail(username: string) {
     const user = await this.usersService.findByUsername(username);
-    if (user.isEmailConfirmed) {
-      throw new BadRequestException('Email already confirmed');
-    }
-    await this.usersService.markEmailAsConfirmed(username);
+    if (user.isEmailConfirmed) return "Email already confirmed";
+    return await this.usersService.markEmailAsConfirmed(username);
   }
 
   public async decodeConfirmationToken(token: string) {

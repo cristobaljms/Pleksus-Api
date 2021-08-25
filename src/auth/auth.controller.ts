@@ -5,6 +5,7 @@ import {
   HttpStatus,
   Post,
   Query,
+  Render,
   Req,
   Request,
   UseGuards,
@@ -35,10 +36,13 @@ export class AuthController {
   }
 
   @Get('email-confirmation')
+  @Render('email-confirmation')
   async emailConfirmation(@Query() query: any) {
     const email = await this.authService.decodeConfirmationToken(query.token);
-    await this.authService.confirmEmail(email);
-    return HttpStatus.OK;
+    const result = await this.authService.confirmEmail(email);
+    let success = true;
+    if(result == "Email already confirmed") success = false;
+    return { success };
   }
 
   @Post('resend-confirmation-link')
