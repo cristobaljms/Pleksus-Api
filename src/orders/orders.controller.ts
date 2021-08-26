@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { OrderDTO } from './dto/orders.dto';
+import { OrderUpdateDTO } from './dto/ordersUpdate.dto';
 import { OrdersService } from './orders.service';
 
 
@@ -26,9 +27,9 @@ export class OrdersController {
     return this.orderService.create(orderDTO);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() orderDTO: OrderDTO) {
-    // return this.orderService.update(id, orderDTO);
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() order: OrderUpdateDTO) {
+    return this.orderService.update(id, order);
   }
 
   @Delete(':id')

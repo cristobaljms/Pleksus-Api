@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { IUser } from 'src/common/interfaces/user.interface';
+
 
 //https://www.youtube.com/watch?v=SNrMmG9L4kI
 export class OrderDTO {
@@ -43,4 +43,9 @@ export class OrderDTO {
   @ApiProperty()
   @IsString()
   readonly description: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  readonly user: string;
 }

@@ -1,32 +1,25 @@
-import {
-  HttpStatus,
-  Injectable,
-  Post,
-  UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { UserDTO } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { USER } from 'src/common/models/models';
-import { IUser } from 'src/common/interfaces/user.interface';
 import { UserUpdateDTO } from './dto/userUpdate.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { User } from './schema/user.schema';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(USER.name) private readonly model: Model<IUser>) {}
+  constructor(@InjectModel(USER.name) private readonly model: Model<User>) {}
 
   async checkPassword(password: string, passwordDB): Promise<boolean> {
     return await bcrypt.compare(password, passwordDB);
   }
 
-  async getById(id: string): Promise<IUser> {
+  async getById(id: string): Promise<User> {
     return await this.model.findById(id);
   }
 
-  async findByUsername(username: string): Promise<IUser> {
+  async findByUsername(username: string): Promise<User> {
     return await this.model.findOne({ username });
   }
 
@@ -35,7 +28,7 @@ export class UsersService {
     return await bcrypt.hash(password, salt);
   }
 
-  async create(userDTO: UserDTO): Promise<IUser> {
+  async create(userDTO: UserDTO): Promise<User> {
     const hash = await this.hashPassword(userDTO.password);
     const newUser = new this.model({
       ...userDTO,
@@ -47,11 +40,11 @@ export class UsersService {
     return await newUser.save();
   }
 
-  async findAll(): Promise<IUser[]> {
+  async findAll(): Promise<User[]> {
     return this.model.find();
   }
 
-  async findOne(id: string): Promise<IUser> {
+  async findOne(id: string): Promise<User> {
     return this.model.findById(id);
   }
 
@@ -60,7 +53,7 @@ export class UsersService {
     return { status: HttpStatus.OK, msg: 'Deleted' };
   }
 
-  async update(id: string, userUpdateDTO: UserUpdateDTO): Promise<IUser> {
+  async update(id: string, userUpdateDTO: UserUpdateDTO): Promise<User> {
     const currentUser = await this.model.findById(id);
 
     if (userUpdateDTO.name) {
@@ -79,7 +72,10 @@ export class UsersService {
     return await currentUser.save();
   }
 
-  async updatePhotoProfile(id: string, file: Express.Multer.File): Promise<IUser> {
+  async updatePhotoProfile(
+    id: string,
+    file: Express.Multer.File,
+  ): Promise<User> {
     const fileB64 = file.buffer.toString('base64');
     console.log('fileB64', fileB64);
     const currentUser = await this.model.findById(id);

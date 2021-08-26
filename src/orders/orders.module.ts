@@ -4,7 +4,7 @@ import { ORDER, USER } from 'src/common/models/models';
 import { UserSchema } from 'src/users/schema/user.schema';
 import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
-import { OrderSchema } from './schema/orders.schema';
+import { OrderSchema } from './schemas/orders.schema';
 
 @Module({
   imports: [
