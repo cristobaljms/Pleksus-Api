@@ -2,30 +2,16 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
 
 
-//https://www.youtube.com/watch?v=SNrMmG9L4kI
 export class OrderDTO {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
   readonly businessType: string;
-  /*
-  Venta / arriendo
-  */
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
   readonly propertyType: string;
-  /*
-  - Apartaestudio
-  - Apartamento
-  - Bodega
-  - Cabaña
-  - Casa
-  - Casa Campestre
-  - Casa lote
-  - Consultorio
-  */
 
   @ApiProperty()
   @IsNotEmpty()
@@ -38,7 +24,7 @@ export class OrderDTO {
 
   @ApiProperty()
   @IsString()
-  readonly rooms: string; // check box
+  readonly rooms: string;
 
   @ApiProperty()
   @IsString()

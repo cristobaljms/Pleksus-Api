@@ -7,7 +7,10 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 })
 export class User extends mongoose.Document{
   @Prop({ required: true })
-  name: string;
+  firstName: string;
+
+  @Prop({ required: true })
+  lastName: string;
 
   @Prop({ required: true })
   username: string;

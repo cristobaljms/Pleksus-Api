@@ -5,7 +5,12 @@ export class UserDTO {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  readonly name: string;
+  readonly firstName: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  readonly lastName: string;
 
   @ApiProperty()
   @IsNotEmpty()

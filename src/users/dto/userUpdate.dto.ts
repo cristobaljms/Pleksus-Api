@@ -4,8 +4,15 @@ import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 export class UserUpdateDTO {
   @ApiProperty()
   @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  readonly name: string;
+  readonly firstName: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsOptional()
+  @IsString()
+  readonly lastName: string;
 
   @ApiProperty()
   @IsOptional()

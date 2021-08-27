@@ -56,8 +56,12 @@ export class UsersService {
   async update(id: string, userUpdateDTO: UserUpdateDTO): Promise<User> {
     const currentUser = await this.model.findById(id);
 
-    if (userUpdateDTO.name) {
-      currentUser.name = userUpdateDTO.name;
+    if (userUpdateDTO.firstName) {
+      currentUser.firstName = userUpdateDTO.firstName;
+    }
+
+    if (userUpdateDTO.lastName) {
+      currentUser.lastName = userUpdateDTO.lastName;
     }
 
     if (userUpdateDTO.phone) {
@@ -77,7 +81,6 @@ export class UsersService {
     file: Express.Multer.File,
   ): Promise<User> {
     const fileB64 = file.buffer.toString('base64');
-    console.log('fileB64', fileB64);
     const currentUser = await this.model.findById(id);
     currentUser.photo = fileB64;
     return await currentUser.save();
