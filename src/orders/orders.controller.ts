@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { GoogleAuthGuard } from 'src/auth/guards/google-auth.guard';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { OrderDTO } from './dto/orders.dto';
 import { OrderUpdateDTO } from './dto/ordersUpdate.dto';
@@ -7,7 +8,7 @@ import { OrdersService } from './orders.service';
 
 
 @ApiTags('orders')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard || GoogleAuthGuard)
 @Controller('api/orders')
 export class OrdersController {
   constructor(private readonly orderService: OrdersService) {}

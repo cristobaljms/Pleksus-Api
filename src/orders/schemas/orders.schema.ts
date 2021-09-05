@@ -7,19 +7,67 @@ import { User } from 'src/users/schema/user.schema';
 })
 export class Order extends mongoose.Document{
   @Prop({ required: true })
-  businessType: string;
+  place: string;
+  
+  @Prop({ required: true })
+  business_type: string;
 
   @Prop({ required: true })
-  propertyType: string;
-
-  @Prop({ required: true })
-  direction: string;
+  property_type: string;
 
   @Prop()
-  maxPrice: string;
+  location_from: string;
+
+  @Prop()
+  location_until: string;
+
+  @Prop()
+  street_from: string;
+
+  @Prop()
+  street_until: string;
+
+  @Prop()
+  location: string;
+
+  @Prop()
+  street: string;
+
+  @Prop()
+  year_old_from: string;
+
+  @Prop()
+  year_old_until: string;
+
+  @Prop()
+  max_price_from: string;
+
+  @Prop()
+  max_price_until: string;
+
+  @Prop()
+  area_from: string;
+
+  @Prop()
+  area_until: string;
 
   @Prop()
   rooms: string;
+
+  @Prop()
+  bathroom: string;
+
+  @Prop()
+  parking_lot: string;
+
+  @Prop()
+  balcony: boolean;
+
+  @Prop()
+  terrace: boolean;
+
+  @Prop()
+  view: string;
 
   @Prop()
   description: string;

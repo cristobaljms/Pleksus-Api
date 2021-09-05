@@ -46,28 +46,88 @@ export class OrdersService {
       throw new HttpException('Order do not exists', HttpStatus.BAD_REQUEST);
     }
 
-    if (orderUpdateDTO.businessType) {
-      currentOrder.businessType = orderUpdateDTO.businessType;
+    if (orderUpdateDTO.place) {
+      currentOrder.place = orderUpdateDTO.place;
     }
 
-    if (orderUpdateDTO.propertyType) {
-      currentOrder.propertyType = orderUpdateDTO.propertyType;
+    if (orderUpdateDTO.business_type) {
+      currentOrder.business_type = orderUpdateDTO.business_type;
     }
 
-    if (orderUpdateDTO.direction) {
-      currentOrder.direction = orderUpdateDTO.direction;
+    if (orderUpdateDTO.property_type) {
+      currentOrder.property_type = orderUpdateDTO.property_type;
     }
 
-    if (orderUpdateDTO.maxPrice) {
-      currentOrder.maxPrice = orderUpdateDTO.maxPrice;
+    if (orderUpdateDTO.location_from) {
+      currentOrder.location_from = orderUpdateDTO.location_from;
+    }
+
+    if (orderUpdateDTO.location_until) {
+      currentOrder.location_until = orderUpdateDTO.location_until;
+    }
+
+    if (orderUpdateDTO.street_from) {
+      currentOrder.street_from = orderUpdateDTO.street_from;
+    }
+    
+    if (orderUpdateDTO.street_until) {
+      currentOrder.street_until = orderUpdateDTO.street_until;
+    }
+
+    if (orderUpdateDTO.location) {
+      currentOrder.location = orderUpdateDTO.location;
+    }
+
+    if (orderUpdateDTO.street) {
+      currentOrder.street = orderUpdateDTO.street;
+    }
+
+    if (orderUpdateDTO.year_old_from) {
+      currentOrder.year_old_from = orderUpdateDTO.year_old_from;
+    }
+
+    if (orderUpdateDTO.year_old_until) {
+      currentOrder.year_old_until = orderUpdateDTO.year_old_until;
+    }
+
+    if (orderUpdateDTO.max_price_from) {
+      currentOrder.max_price_from = orderUpdateDTO.max_price_from;
+    }
+
+    if (orderUpdateDTO.max_price_until) {
+      currentOrder.max_price_until = orderUpdateDTO.max_price_until;
+    }
+
+    if (orderUpdateDTO.area_from) {
+      currentOrder.area_from = orderUpdateDTO.area_from;
+    }
+
+    if (orderUpdateDTO.area_until) {
+      currentOrder.area_until = orderUpdateDTO.area_until;
     }
 
     if (orderUpdateDTO.rooms) {
       currentOrder.rooms = orderUpdateDTO.rooms;
     }
 
-    if (orderUpdateDTO.description) {
-      currentOrder.description = orderUpdateDTO.description;
+    if (orderUpdateDTO.bathroom) {
+      currentOrder.bathroom = orderUpdateDTO.bathroom;
+    }
+
+    if (orderUpdateDTO.parking_lot) {
+      currentOrder.parking_lot = orderUpdateDTO.parking_lot;
+    }
+
+    if (orderUpdateDTO.balcony) {
+      currentOrder.balcony = orderUpdateDTO.balcony;
+    }
+
+    if (orderUpdateDTO.terrace) {
+      currentOrder.terrace = orderUpdateDTO.terrace;
+    }
+
+    if (orderUpdateDTO.view) {
+      currentOrder.view = orderUpdateDTO.view;
     }
 
     return await currentOrder.save();

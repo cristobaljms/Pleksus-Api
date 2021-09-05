@@ -14,6 +14,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { UserDTO } from 'src/users/dto/user.dto';
 import { UserOnlyIdDTO } from 'src/users/dto/userOnlyId.dto';
 import { AuthService } from './auth.service';
+import { GoogleAuthGuard } from './guards/google-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 
@@ -49,5 +50,15 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   async resendConfirmationLink(@Body() request: UserOnlyIdDTO) {
     await this.authService.resendConfirmationLink(request.id);
+  }
+
+  @Get('google')
+  @UseGuards(GoogleAuthGuard)
+  async googleAuth(@Req() req) {}
+
+  @Get('google/redirect')
+  @UseGuards(GoogleAuthGuard)
+  googleAuthRedirect(@Req() req) {
+    return this.authService.googleLogin(req)
   }
 }
