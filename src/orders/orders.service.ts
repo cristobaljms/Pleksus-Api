@@ -22,7 +22,7 @@ export class OrdersService {
   async findOne(id: string): Promise<Order> {
     const order = await this.model.findById(id).populate('user');
 
-    if(!order) {
+    if (!order) {
       throw new HttpException('Order do not exists', HttpStatus.BAD_REQUEST);
     }
 
@@ -30,9 +30,9 @@ export class OrdersService {
   }
 
   async delete(id: string) {
-    const order = await this.model.findById(id)
+    const order = await this.model.findById(id);
 
-    if(!order) {
+    if (!order) {
       throw new HttpException('Order do not exists', HttpStatus.BAD_REQUEST);
     }
 
@@ -42,7 +42,7 @@ export class OrdersService {
   async update(id: string, orderUpdateDTO: OrderUpdateDTO): Promise<Order> {
     const currentOrder = await this.model.findById(id);
 
-    if(!currentOrder) {
+    if (!currentOrder) {
       throw new HttpException('Order do not exists', HttpStatus.BAD_REQUEST);
     }
 
@@ -69,7 +69,7 @@ export class OrdersService {
     if (orderUpdateDTO.street_from) {
       currentOrder.street_from = orderUpdateDTO.street_from;
     }
-    
+
     if (orderUpdateDTO.street_until) {
       currentOrder.street_until = orderUpdateDTO.street_until;
     }

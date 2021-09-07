@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  HttpStatus,
   Post,
   Query,
   Render,
@@ -14,10 +13,10 @@ import { ApiTags } from '@nestjs/swagger';
 import { UserDTO } from 'src/users/dto/user.dto';
 import { UserOnlyIdDTO } from 'src/users/dto/userOnlyId.dto';
 import { AuthService } from './auth.service';
-import { GoogleAuthGuard } from './guards/google-auth.guard';
+import { UserOauthDTO } from './dto/userOauth.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-
+import { OAuth2Client } from 'google-auth-library';
 @ApiTags('authentication')
 @Controller('api/auth')
 export class AuthController {
@@ -42,7 +41,7 @@ export class AuthController {
     const email = await this.authService.decodeConfirmationToken(query.token);
     const result = await this.authService.confirmEmail(email);
     let success = true;
-    if(result == "Email already confirmed") success = false;
+    if (result == 'Email already confirmed') success = false;
     return { success };
   }
 
@@ -53,12 +52,13 @@ export class AuthController {
   }
 
   @Get('google')
-  @UseGuards(GoogleAuthGuard)
-  async googleAuth(@Req() req) {}
+  async googleAuth(@Body() request: UserOauthDTO) {
+    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+    const result = await client.verifyIdToken({
+      idToken: request.oauthToken,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
 
-  @Get('google/redirect')
-  @UseGuards(GoogleAuthGuard)
-  googleAuthRedirect(@Req() req) {
-    return this.authService.googleLogin(req)
+    console.log("google", result);
   }
 }
