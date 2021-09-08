@@ -17,10 +17,16 @@ import { UserOauthDTO } from './dto/userOauth.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { OAuth2Client } from 'google-auth-library';
+import { UsersService } from 'src/users/users.service';
+import { User } from 'src/users/schema/user.schema';
+
 @ApiTags('authentication')
 @Controller('api/auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly usersService: UsersService
+  ) {}
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
@@ -51,14 +57,30 @@ export class AuthController {
     await this.authService.resendConfirmationLink(request.id);
   }
 
-  @Get('google')
+  @Post('google')
   async googleAuth(@Body() request: UserOauthDTO) {
-    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+    const client = new OAuth2Client();
     const result = await client.verifyIdToken({
-      idToken: request.oauthToken,
+      idToken: request.idToken,
       audience: process.env.GOOGLE_CLIENT_ID,
     });
-
-    console.log("google", result);
+    const user_payload = result.getPayload();
+    const user = await this.usersService.findByUsername(user_payload.email);
+    if (!user) {
+      const userDTO: UserDTO = {
+        firstName: user_payload.given_name,
+        lastName: user_payload.family_name,
+        photo: user_payload.picture,
+        username: user_payload.email,
+        password: null,
+        admin: false,
+        isEmailConfirmed: true,
+        phone: null,
+        signUpByGoogle: true,
+      };
+      const createdUser: User = await this.usersService.createFromGoogle(userDTO);
+      return this.authService.login(createdUser);
+    }
+    return this.authService.login(user);
   }
 }

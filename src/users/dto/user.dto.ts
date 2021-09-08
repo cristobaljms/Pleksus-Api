@@ -18,7 +18,6 @@ export class UserDTO {
   readonly username: string;
 
   @ApiProperty()
-  @IsNotEmpty()
   @IsString()
   readonly password: string;
 
@@ -31,4 +30,6 @@ export class UserDTO {
   readonly phone: string = null;
   
   readonly photo: string = null;
+
+  readonly signUpByGoogle: boolean = false;
 }

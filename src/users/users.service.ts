@@ -40,6 +40,11 @@ export class UsersService {
     return await newUser.save();
   }
 
+  async createFromGoogle(userDTO: UserDTO): Promise<User> {
+    const newUser = new this.model(userDTO);
+    return await newUser.save();
+  }
+
   async findAll(): Promise<User[]> {
     return this.model.find();
   }

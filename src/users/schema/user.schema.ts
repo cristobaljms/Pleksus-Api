@@ -15,7 +15,7 @@ export class User extends mongoose.Document{
   @Prop({ required: true })
   username: string;
 
-  @Prop({ required: true })
+  @Prop()
   password: string;
 
   @Prop()
@@ -29,6 +29,9 @@ export class User extends mongoose.Document{
 
   @Prop()
   photo: string;
+
+  @Prop()
+  signUpByGoogle: Boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
