@@ -9,7 +9,7 @@ import { Order } from './schemas/orders.schema';
 
 
 @ApiTags('orders')
-@UseGuards(JwtAuthGuard)
+
 @Controller('api/orders')
 export class OrdersController {
   constructor(private readonly orderService: OrdersService) {}
@@ -25,22 +25,26 @@ export class OrdersController {
   }
 
   @Get('findByUser/:userId')
+  @UseGuards(JwtAuthGuard)
   async findByUserId(@Param('userId') userId: string) {
     const result = await this.orderService.findAll();
     return result.filter((order: any) => order.user == userId);
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   create(@Body() orderDTO: OrderDTO) {
     return this.orderService.create(orderDTO);
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   update(@Param('id') id: string, @Body() order: OrderUpdateDTO) {
     return this.orderService.update(id, order);
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   delete(@Param('id') id: string) {
     return this.orderService.delete(id);
   }
