@@ -1,11 +1,10 @@
-
 import * as mongoose from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({
   timestamps: true,
 })
-export class User extends mongoose.Document{
+export class User extends mongoose.Document {
   @Prop({ required: true })
   firstName: string;
 
@@ -19,10 +18,10 @@ export class User extends mongoose.Document{
   password: string;
 
   @Prop()
-  admin: Boolean;
+  admin: boolean;
 
   @Prop()
-  isEmailConfirmed: Boolean;
+  isEmailConfirmed: boolean;
 
   @Prop()
   phone: string;
@@ -31,7 +30,10 @@ export class User extends mongoose.Document{
   photo: string;
 
   @Prop()
-  signUpByGoogle: Boolean;
+  signUpByGoogle: boolean;
+
+  @Prop()
+  verificationCode: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

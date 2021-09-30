@@ -23,7 +23,10 @@ export class AuthService {
     const user = await this.usersService.findByUsername(username);
     if (!user) return null;
 
-    const isValidPassword = await this.usersService.checkPassword(password, user.password);
+    const isValidPassword = await this.usersService.checkPassword(
+      password,
+      user.password,
+    );
     if (!isValidPassword) return null;
 
     return user;
@@ -33,7 +36,7 @@ export class AuthService {
     const payload = { username: user.username, sub: user.userId };
     return {
       access_token: this.jwtService.sign(payload),
-      user
+      user,
     };
   }
 
@@ -45,12 +48,21 @@ export class AuthService {
       if (e instanceof MongoError) {
         switch (e.code) {
           case 11000:
-            throw new HttpException('User with that email already exists', HttpStatus.BAD_REQUEST);
+            throw new HttpException(
+              'User with that email already exists',
+              HttpStatus.BAD_REQUEST,
+            );
           default:
-            throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new HttpException(
+              'Something went wrong',
+              HttpStatus.INTERNAL_SERVER_ERROR,
+            );
         }
       } else {
-        throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
+        throw new HttpException(
+          'Something went wrong',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
       }
     }
   }
@@ -66,15 +78,15 @@ export class AuthService {
     const html = `
       <h3 style="font-size: 22px; font-family: Arial;">Bienvenido a Pleksus</h3>
       <p style="font-size: 20px; font-family: Arial;">Felicidades por registrarse en Pleksus, para culminar con su registro lo invitamos a seguir el siguiente link: <a target="_blank" href="${url}">Link de verificación</a></p>
-    `
-    
+    `;
+
     try {
       return this.sendGrid.send({
         to: email,
-        from: 'cmunoz21x@gmail.com',
+        from: 'pleksus.app@gmail.com',
         subject: 'Pleksus - Correo de confirmación',
-        html
-      })
+        html,
+      });
     } catch (e) {
       return e;
     }
@@ -83,15 +95,14 @@ export class AuthService {
   async resendConfirmationLink(userId: string) {
     const user = await this.usersService.getById(userId);
     if (!user) throw new BadRequestException('User dont exist');
-    if (user.isEmailConfirmed) throw new BadRequestException('Email already confirmed');
+    if (user.isEmailConfirmed)
+      throw new BadRequestException('Email already confirmed');
     return await this.sendVerificationLink(user.username);
   }
 
-
-
   public async confirmEmail(username: string) {
     const user = await this.usersService.findByUsername(username);
-    if (user.isEmailConfirmed) return "Email already confirmed";
+    if (user.isEmailConfirmed) return 'Email already confirmed';
     return await this.usersService.markEmailAsConfirmed(username);
   }
 
@@ -100,7 +111,7 @@ export class AuthService {
       const payload = await this.jwtService.verify(token, {
         secret: process.env.JWT_SECRET,
       });
- 
+
       if (typeof payload === 'object' && 'email' in payload) {
         return payload.email;
       }

@@ -6,10 +6,14 @@ import { Model } from 'mongoose';
 import { USER } from 'src/common/models/models';
 import { UserUpdateDTO } from './dto/userUpdate.dto';
 import { User } from './schema/user.schema';
+import { SendGridService } from '@anchan828/nest-sendgrid';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(USER.name) private readonly model: Model<User>) {}
+  constructor(
+    @InjectModel(USER.name) private readonly model: Model<User>,
+    private readonly sendGrid: SendGridService,
+  ) {}
 
   async checkPassword(password: string, passwordDB): Promise<boolean> {
     return await bcrypt.compare(password, passwordDB);
@@ -98,5 +102,41 @@ export class UsersService {
         isEmailConfirmed: true,
       },
     );
+  }
+
+  async sendVerificationCode(username: string) {
+    const code = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+
+    try {
+      const result = await this.model.findOneAndUpdate(
+        { username },
+        {
+          verificationCode: `${code}`,
+        },
+      );
+
+      console.log('2asdasdsa', result);
+      const html = `
+        <h3 style="font-size: 22px; font-family: Arial;">Codigo para recuperar su contraseña</h3>
+        <h1 style="font-size: 40px; font-family: Arial;">${code}</h1>
+      `;
+
+      return this.sendGrid.send({
+        to: username,
+        from: 'pleksus.app@gmail.com',
+        subject: 'Pleksus - Recuperación de contraseña',
+        html,
+      });
+    } catch (e) {
+      return e;
+    }
+  }
+
+  async verificationCode(username: string, code: string) {
+    try {
+      return await this.model.findOne({ username, code });
+    } catch (e) {
+      return e;
+    }
   }
 }

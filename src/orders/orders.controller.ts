@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { stringify } from 'querystring';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
@@ -7,9 +17,7 @@ import { OrderUpdateDTO } from './dto/ordersUpdate.dto';
 import { OrdersService } from './orders.service';
 import { Order } from './schemas/orders.schema';
 
-
 @ApiTags('orders')
-
 @Controller('api/orders')
 export class OrdersController {
   constructor(private readonly orderService: OrdersService) {}

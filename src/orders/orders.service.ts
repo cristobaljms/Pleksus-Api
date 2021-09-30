@@ -130,6 +130,10 @@ export class OrdersService {
       currentOrder.view = orderUpdateDTO.view;
     }
 
+    if (orderUpdateDTO.property_type_oldest) {
+      currentOrder.property_type_oldest = orderUpdateDTO.property_type_oldest;
+    }
+
     return await currentOrder.save();
   }
 }

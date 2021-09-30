@@ -26,10 +26,12 @@ export class UserDTO {
   readonly admin: boolean = false;
 
   readonly isEmailConfirmed: boolean = false;
-  
+
   readonly phone: string = null;
-  
+
   readonly photo: string = null;
 
   readonly signUpByGoogle: boolean = false;
+
+  readonly verificationCode: string;
 }

@@ -5,10 +5,10 @@ import { User } from 'src/users/schema/user.schema';
 @Schema({
   timestamps: true,
 })
-export class Order extends mongoose.Document{
+export class Order extends mongoose.Document {
   @Prop({ required: true })
   place: string;
-  
+
   @Prop({ required: true })
   business_type: string;
 
@@ -72,7 +72,10 @@ export class Order extends mongoose.Document{
   @Prop()
   description: string;
 
-  @Prop({type: mongoose.Types.ObjectId, required: true, ref: 'users'})
+  @Prop()
+  property_type_oldest: string;
+
+  @Prop({ type: mongoose.Types.ObjectId, required: true, ref: 'users' })
   user: User;
 }
 

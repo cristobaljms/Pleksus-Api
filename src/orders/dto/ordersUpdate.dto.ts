@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
-
 export class OrderUpdateDTO {
   @ApiProperty()
   @IsOptional()
@@ -106,6 +105,11 @@ export class OrderUpdateDTO {
   @IsOptional()
   @IsString()
   readonly description: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  readonly property_type_oldest: string;
 
   @ApiProperty()
   @IsOptional()

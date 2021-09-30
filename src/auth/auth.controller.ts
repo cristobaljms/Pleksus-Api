@@ -25,7 +25,7 @@ import { User } from 'src/users/schema/user.schema';
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
   ) {}
 
   @UseGuards(LocalAuthGuard)
@@ -77,8 +77,11 @@ export class AuthController {
         isEmailConfirmed: true,
         phone: null,
         signUpByGoogle: true,
+        verificationCode: null,
       };
-      const createdUser: User = await this.usersService.createFromGoogle(userDTO);
+      const createdUser: User = await this.usersService.createFromGoogle(
+        userDTO,
+      );
       return this.authService.login(createdUser);
     }
     return this.authService.login(user);
