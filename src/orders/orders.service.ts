@@ -134,6 +134,18 @@ export class OrdersService {
       currentOrder.property_type_oldest = orderUpdateDTO.property_type_oldest;
     }
 
+    if (orderUpdateDTO.time_to_buy) {
+      currentOrder.time_to_buy = orderUpdateDTO.time_to_buy;
+    }
+
+    if (orderUpdateDTO.how_to_pay) {
+      currentOrder.how_to_pay = orderUpdateDTO.how_to_pay;
+    }
+
+    if (orderUpdateDTO.need_sell) {
+      currentOrder.need_sell = orderUpdateDTO.need_sell;
+    }
+
     return await currentOrder.save();
   }
 }

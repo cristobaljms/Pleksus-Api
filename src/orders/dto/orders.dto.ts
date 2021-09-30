@@ -116,6 +116,21 @@ export class OrderDTO {
   readonly property_type_oldest: string;
 
   @ApiProperty()
+  @IsOptional()
+  @IsString()
+  readonly time_to_buy: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  readonly how_to_pay: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  readonly need_sell: boolean;
+
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   readonly user: string;

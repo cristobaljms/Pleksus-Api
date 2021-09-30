@@ -75,6 +75,15 @@ export class Order extends mongoose.Document {
   @Prop()
   property_type_oldest: string;
 
+  @Prop()
+  time_to_buy: string;
+
+  @Prop()
+  how_to_pay: string;
+
+  @Prop()
+  need_sell: boolean;
+
   @Prop({ type: mongoose.Types.ObjectId, required: true, ref: 'users' })
   user: User;
 }

@@ -114,5 +114,20 @@ export class OrderUpdateDTO {
   @ApiProperty()
   @IsOptional()
   @IsString()
+  readonly time_to_buy: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  readonly how_to_pay: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  readonly need_sell: boolean;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
   readonly view: string;
 }
