@@ -30,4 +30,16 @@ export class UserUpdateDTO {
   @IsNotEmpty()
   @IsString()
   readonly photo: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  readonly type: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  readonly interest: string;
 }

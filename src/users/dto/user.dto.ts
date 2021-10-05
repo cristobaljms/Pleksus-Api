@@ -34,4 +34,8 @@ export class UserDTO {
   readonly signUpByGoogle: boolean = false;
 
   readonly verificationCode: string;
+
+  readonly type: string;
+
+  readonly interest: string;
 }

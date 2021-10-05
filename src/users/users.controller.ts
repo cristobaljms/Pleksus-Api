@@ -16,32 +16,36 @@ import { UserUpdateDTO } from './dto/userUpdate.dto';
 import { UsersService } from './users.service';
 
 @ApiTags('users')
-@UseGuards(JwtAuthGuard)
 @Controller('api/users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.getById(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() user: UserUpdateDTO) {
     return this.usersService.update(id, user);
   }
 
-  @Patch('send-verification-code/:username')
+  @Get('send-verification-code/:username')
   sendVerificationCode(@Param('username') username: string) {
-    console.log('usernae', username);
     return this.usersService.sendVerificationCode(username);
   }
 
-  @Patch('verification-code')
-  verificationCode(@Query() username: string, @Query() code: string) {
+  @Get('send-verification-code/:username/:code')
+  verificationCode(
+    @Param('username') username: string,
+    @Param('code') code: string,
+  ) {
     return this.usersService.verificationCode(username, code);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch('update-photo-profile/:id')
   @UseInterceptors(FileInterceptor('file'))
   updatePhotoProfile(

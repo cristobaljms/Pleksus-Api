@@ -67,7 +67,7 @@ export class AuthService {
     }
   }
 
-  public sendVerificationLink(email: string) {
+  async sendVerificationLink(email: string) {
     const payload = { email };
     const token = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,

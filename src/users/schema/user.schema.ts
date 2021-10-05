@@ -34,6 +34,12 @@ export class User extends mongoose.Document {
 
   @Prop()
   verificationCode: string;
+
+  @Prop()
+  type: string;
+
+  @Prop()
+  interest: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

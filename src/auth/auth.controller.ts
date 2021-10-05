@@ -78,6 +78,8 @@ export class AuthController {
         phone: null,
         signUpByGoogle: true,
         verificationCode: null,
+        interest: null,
+        type: null,
       };
       const createdUser: User = await this.usersService.createFromGoogle(
         userDTO,

@@ -62,6 +62,10 @@ export class UsersService {
     return { status: HttpStatus.OK, msg: 'Deleted' };
   }
 
+  async deleteByUsername(username: string) {
+    return await this.model.findOneAndDelete({ username });
+  }
+
   async update(id: string, userUpdateDTO: UserUpdateDTO): Promise<User> {
     const currentUser = await this.model.findById(id);
 
@@ -75,6 +79,14 @@ export class UsersService {
 
     if (userUpdateDTO.phone) {
       currentUser.phone = userUpdateDTO.phone;
+    }
+
+    if (userUpdateDTO.interest) {
+      currentUser.interest = userUpdateDTO.interest;
+    }
+
+    if (userUpdateDTO.type) {
+      currentUser.type = userUpdateDTO.type;
     }
 
     if (userUpdateDTO.password) {
@@ -115,7 +127,6 @@ export class UsersService {
         },
       );
 
-      console.log('2asdasdsa', result);
       const html = `
         <h3 style="font-size: 22px; font-family: Arial;">Codigo para recuperar su contraseña</h3>
         <h1 style="font-size: 40px; font-family: Arial;">${code}</h1>
@@ -134,7 +145,15 @@ export class UsersService {
 
   async verificationCode(username: string, code: string) {
     try {
-      return await this.model.findOne({ username, code });
+      const user = await this.model.findOne({
+        username,
+        verificationCode: code,
+      });
+      if (user) {
+        return { status: HttpStatus.OK, msg: 'Verfication success' };
+      } else {
+        return { status: HttpStatus.NOT_FOUND, msg: 'Verfication failed' };
+      }
     } catch (e) {
       return e;
     }
