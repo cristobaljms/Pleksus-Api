@@ -40,6 +40,8 @@ export class UsersService {
       admin: false,
       isEmailConfirmed: false,
       phone: null,
+      type: null,
+      interest: null
     });
     return await newUser.save();
   }
