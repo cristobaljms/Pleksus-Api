@@ -126,6 +126,10 @@ export class OrdersService {
       currentOrder.terrace = orderUpdateDTO.terrace;
     }
 
+    if (orderUpdateDTO.deposit) {
+      currentOrder.deposit = orderUpdateDTO.deposit;
+    }
+
     if (orderUpdateDTO.view) {
       currentOrder.view = orderUpdateDTO.view;
     }

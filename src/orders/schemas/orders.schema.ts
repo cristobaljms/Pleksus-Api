@@ -67,6 +67,9 @@ export class Order extends mongoose.Document {
   terrace: boolean;
 
   @Prop()
+  deposit: boolean;
+
+  @Prop()
   view: string;
 
   @Prop()

@@ -41,7 +41,7 @@ export class UsersService {
       isEmailConfirmed: false,
       phone: null,
       type: null,
-      interest: null
+      interest: null,
     });
     return await newUser.save();
   }

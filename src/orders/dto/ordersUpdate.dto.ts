@@ -103,6 +103,11 @@ export class OrderUpdateDTO {
 
   @ApiProperty()
   @IsOptional()
+  @IsBoolean()
+  readonly deposit: boolean;
+
+  @ApiProperty()
+  @IsOptional()
   @IsString()
   readonly description: string;
 

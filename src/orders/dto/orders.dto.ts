@@ -102,6 +102,11 @@ export class OrderDTO {
 
   @ApiProperty()
   @IsOptional()
+  @IsBoolean()
+  readonly deposit: boolean;
+
+  @ApiProperty()
+  @IsOptional()
   @IsString()
   readonly view: string;
 
