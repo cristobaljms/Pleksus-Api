@@ -128,6 +128,11 @@ export class OrderDTO {
   @ApiProperty()
   @IsOptional()
   @IsString()
+  readonly code: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
   readonly how_to_pay: string;
 
   @ApiProperty()

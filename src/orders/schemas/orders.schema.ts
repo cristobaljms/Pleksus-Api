@@ -73,6 +73,9 @@ export class Order extends mongoose.Document {
   view: string;
 
   @Prop()
+  code: string;
+
+  @Prop()
   description: string;
 
   @Prop()

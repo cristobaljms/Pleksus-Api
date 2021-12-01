@@ -114,6 +114,10 @@ export class OrdersService {
       currentOrder.bathroom = orderUpdateDTO.bathroom;
     }
 
+    if (orderUpdateDTO.code) {
+      currentOrder.code = orderUpdateDTO.code;
+    }
+
     if (orderUpdateDTO.parking_lot) {
       currentOrder.parking_lot = orderUpdateDTO.parking_lot;
     }

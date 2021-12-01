@@ -119,6 +119,11 @@ export class OrderUpdateDTO {
   @ApiProperty()
   @IsOptional()
   @IsString()
+  readonly code: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
   readonly time_to_buy: string;
 
   @ApiProperty()
