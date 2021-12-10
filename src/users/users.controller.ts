@@ -32,6 +32,11 @@ export class UsersController {
     return this.usersService.update(id, user);
   }
 
+  @Patch('update-password/:id')
+  updatePassword(@Param('id') id: string, @Body() user: UserUpdateDTO) {
+    return this.usersService.updatePassword(id, user);
+  }
+
   @Get('send-verification-code/:username')
   sendVerificationCode(@Param('username') username: string) {
     return this.usersService.sendVerificationCode(username);

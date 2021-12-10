@@ -99,6 +99,19 @@ export class UsersService {
     return await currentUser.save();
   }
 
+  async updatePassword(
+    id: string,
+    userUpdateDTO: UserUpdateDTO,
+  ): Promise<User> {
+    const currentUser = await this.model.findById(id);
+    if (userUpdateDTO.password) {
+      const hash = await this.hashPassword(userUpdateDTO.password);
+      currentUser.password = hash;
+    }
+
+    return await currentUser.save();
+  }
+
   async updatePhotoProfile(
     id: string,
     file: Express.Multer.File,
