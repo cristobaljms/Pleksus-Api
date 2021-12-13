@@ -100,10 +100,10 @@ export class UsersService {
   }
 
   async updatePassword(
-    id: string,
+    username: string,
     userUpdateDTO: UserUpdateDTO,
   ): Promise<User> {
-    const currentUser = await this.model.findById(id);
+    const currentUser = await this.model.findOne({ username });
     if (userUpdateDTO.password) {
       const hash = await this.hashPassword(userUpdateDTO.password);
       currentUser.password = hash;
