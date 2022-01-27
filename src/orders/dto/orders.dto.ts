@@ -144,4 +144,14 @@ export class OrderDTO {
   @IsString()
   @IsNotEmpty()
   readonly user: string;
+
+  @IsString()
+  @IsNotEmpty()
+  readonly estrato: string
+
+  @IsString()
+  @IsNotEmpty()
+  readonly permuta: string
+
+
 }

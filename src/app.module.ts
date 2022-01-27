@@ -12,10 +12,7 @@ import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath: ['.env'],
-      isGlobal: true,
-    }),
+    ConfigModule.forRoot(),
     TwilioModule.forRoot({
       accountSid: process.env.TWILIO_ACCOUNT_SID,
       authToken: process.env.TWILIO_AUTH_TOKEN,

@@ -90,6 +90,12 @@ export class Order extends mongoose.Document {
   @Prop()
   need_sell: boolean;
 
+  @Prop()
+  estrato: String;
+
+  @Prop()
+  permuta: String
+
   @Prop({ type: mongoose.Types.ObjectId, required: true, ref: 'users' })
   user: User;
 }
