@@ -151,7 +151,7 @@ export class OrderDTO {
 
   @IsString()
   @IsNotEmpty()
-  readonly permuta: string
+  readonly permuta: boolean
 
 
 }
