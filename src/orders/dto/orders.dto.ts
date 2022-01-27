@@ -149,7 +149,7 @@ export class OrderDTO {
   @IsNotEmpty()
   readonly estrato: string
 
-  @IsString()
+  @IsBoolean()
   @IsNotEmpty()
   readonly permuta: boolean
 
