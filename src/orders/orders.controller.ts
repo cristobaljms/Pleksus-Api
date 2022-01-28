@@ -12,10 +12,12 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { stringify } from 'querystring';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { UniqueIdSell, UniqueIdToLease } from 'src/common/helpers/helpers';
 import { OrderDTO } from './dto/orders.dto';
 import { OrderUpdateDTO } from './dto/ordersUpdate.dto';
 import { OrdersService } from './orders.service';
 import { Order } from './schemas/orders.schema';
+
 
 @ApiTags('orders')
 @Controller('api/orders')
@@ -44,10 +46,10 @@ export class OrdersController {
   async create(@Body() orderDTO: OrderDTO) {
     if(orderDTO.business_type.includes('sell')){
       const correlativo = await this.orderService.correlativo();
-      orderDTO.code = `01` +  `${orderDTO.user}` + `${correlativo}`;
-    }else if(orderDTO.business_type.includes('to lease')){
+      orderDTO.code = `${UniqueIdSell()}` + `${correlativo}`;
+    }else if(orderDTO.business_type.includes('toLease')){
       const correlativo = await this.orderService.correlativo();
-      orderDTO.code = `00` +  `${orderDTO.user}` + `${correlativo}`;
+      orderDTO.code = `${UniqueIdToLease()}` + `${correlativo}`;
     }
     return this.orderService.create(orderDTO);
   }
