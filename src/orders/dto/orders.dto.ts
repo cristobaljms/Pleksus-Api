@@ -128,7 +128,7 @@ export class OrderDTO {
   @ApiProperty()
   @IsOptional()
   @IsString()
-  readonly code: string;
+  code: string;
 
   @ApiProperty()
   @IsOptional()

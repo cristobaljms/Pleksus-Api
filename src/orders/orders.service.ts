@@ -156,4 +156,8 @@ export class OrdersService {
 
     return await currentOrder.save();
   }
+
+  async correlativo(): Promise<any> {
+    return await this.model.find().count({})     
+  }
 }
