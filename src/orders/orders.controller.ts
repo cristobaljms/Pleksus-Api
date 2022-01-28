@@ -12,7 +12,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { stringify } from 'querystring';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { UniqueIdSell, UniqueIdToLease } from 'src/common/helpers/helpers';
+import { uniqueId } from 'src/common/helpers/helpers';
 import { OrderDTO } from './dto/orders.dto';
 import { OrderUpdateDTO } from './dto/ordersUpdate.dto';
 import { OrdersService } from './orders.service';
@@ -21,7 +21,8 @@ import { Order } from './schemas/orders.schema';
 
 @ApiTags('orders')
 @Controller('api/orders')
-export class OrdersController {
+export class OrdersController { 
+  
   constructor(private readonly orderService: OrdersService) {}
 
   @Get()
@@ -41,15 +42,19 @@ export class OrdersController {
     return result.filter((order: any) => order.user == userId);
   }
 
+  //orderDTO.code = `${UniqueIdSell()}` + `${correlativo}`;
   @Post()
   @UseGuards(JwtAuthGuard)
   async create(@Body() orderDTO: OrderDTO) {
+  
+    
     if(orderDTO.business_type.includes('sell')){
       const correlativo = await this.orderService.correlativo();
-      orderDTO.code = `${UniqueIdSell()}` + `${correlativo}`;
+      orderDTO.code = uniqueId('C-0000', correlativo);
     }else if(orderDTO.business_type.includes('toLease')){
+      
       const correlativo = await this.orderService.correlativo();
-      orderDTO.code = `${UniqueIdToLease()}` + `${correlativo}`;
+      orderDTO.code =  orderDTO.code = uniqueId('A-0000', correlativo);
     }
     return this.orderService.create(orderDTO);
   }
