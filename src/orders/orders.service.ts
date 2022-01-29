@@ -30,13 +30,7 @@ export class OrdersService {
   }
 
   async delete(id: string) {
-    const order = await this.model.findById(id);
-
-    if (!order) {
-      throw new HttpException('Order do not exists', HttpStatus.BAD_REQUEST);
-    }
-
-    return await order.delete();
+    return await this.model.findByIdAndUpdate(id, { status: false }, {new: true});
   }
 
   async update(id: string, orderUpdateDTO: OrderUpdateDTO): Promise<Order> {

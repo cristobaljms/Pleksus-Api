@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsOptional, IsString, Allow } from 'class-validator';
 
 export class OrderDTO {
   @ApiProperty()
@@ -152,6 +152,9 @@ export class OrderDTO {
   @IsBoolean()
   @IsNotEmpty()
   readonly permuta: boolean
+
+  @Allow()
+  readonly status: boolean;
 
 
 }

@@ -94,7 +94,13 @@ export class Order extends mongoose.Document {
   estrato: String;
 
   @Prop()
-  permuta: boolean
+  permuta: boolean;
+
+  @Prop({
+    type: Boolean,
+    default: true,
+  })
+  status: boolean;
 
   @Prop({ type: mongoose.Types.ObjectId, required: true, ref: 'users' })
   user: User;
