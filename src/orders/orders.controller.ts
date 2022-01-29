@@ -46,7 +46,7 @@ export class OrdersController {
   @Post()
   @UseGuards(JwtAuthGuard)
   async create(@Body() orderDTO: OrderDTO) {
-    if(orderDTO.business_type.includes('sell')){
+    if(orderDTO.business_type.includes('Sell')){
       const correlativo = await this.orderService.correlativo();
       orderDTO.code = uniqueId('C-000000', correlativo);
     }else if(orderDTO.business_type.includes('toLease')){
