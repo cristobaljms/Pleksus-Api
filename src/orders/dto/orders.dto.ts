@@ -146,7 +146,7 @@ export class OrderDTO {
   readonly user: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   readonly estrato: string
 
   @IsBoolean()

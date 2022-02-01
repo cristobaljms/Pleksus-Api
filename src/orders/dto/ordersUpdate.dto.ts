@@ -140,4 +140,5 @@ export class OrderUpdateDTO {
   @IsOptional()
   @IsString()
   readonly view: string;
+
 }
