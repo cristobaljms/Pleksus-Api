@@ -9,6 +9,8 @@ import { SendGridModule } from "@anchan828/nest-sendgrid";
 import { TwilioModule } from 'nestjs-twilio';
 import { PropertiesModule } from './properties/properties.module';
 import { OrdersModule } from './orders/orders.module';
+import { FavoritesController } from './favoritos/favorites.controller';
+import { FavoritosModule } from './favoritos/favoritos.module';
 
 @Module({
   imports: [
@@ -28,6 +30,7 @@ import { OrdersModule } from './orders/orders.module';
     AuthModule,
     PropertiesModule,
     OrdersModule,
+    FavoritosModule,
   ],
   controllers: [AppController],
   providers: [AppService],

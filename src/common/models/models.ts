@@ -5,3 +5,7 @@ export const USER = {
 export const ORDER = {
   name: 'orders',
 };
+
+export const FAVORITES = {
+  name: 'favorites'
+}
